@@ -1,0 +1,27 @@
+{
+  "name": "rahisi-routing",
+  "version": "1.0.0",
+  "description": "Routing library for rahisi.",
+  "main": "dist/routing.js",
+  "typings": "dist/routing.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "keywords": [
+    "UI",
+    "Reactive",
+    "FRP"
+  ],
+  "author": "Muigai Mwaura",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/history": "^4.7.0",
+    "typescript": "^3.0.1"
+  },
+  "dependencies": {
+    "history": "^4.7.2",
+    "path-to-regexp": "^2.2.1",
+    "rahisi": "^1.1.14"
+  }
+}

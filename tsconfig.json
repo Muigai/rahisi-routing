@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        /* JSX Options */
+        "jsx": "react",
+        /* Basic Options */
+        "module": "commonjs",
+        "target": "es2015",
+        "outDir": "./dist",
+        "removeComments": false,
+        /* Type-Checking Options */
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedParameters": true,
+        /* Source Map Options */
+        "sourceMap": true,
+        "declaration": true
+    },
+    "files": [
+        "src/routing.ts"
+    ]
+}
