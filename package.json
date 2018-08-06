@@ -23,5 +23,13 @@
     "history": "^4.7.2",
     "path-to-regexp": "^2.2.1",
     "rahisi": "^1.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muigai/rahisi_routing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Muigai/rahisi_routing/issues"
+  },
+  "homepage": "https://github.com/Muigai/rahisi_routing#readme"
 }
