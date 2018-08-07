@@ -1,22 +1,22 @@
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 import pathToRegexp = require("path-to-regexp");
-import { BaseElement, OnHandlerA, R, React } from "rahisi";
-import {F0, F1} from "rahisi-type-utils";
+import { BaseElement, OnHandlerA, R, React, Renderable } from "rahisi";
+import { F0, F1 } from "rahisi-type-utils";
 
 const history = createBrowserHistory();
 
-export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-    const attributes = React.getAttributes(props as any);
-    attributes.push(
-        new OnHandlerA("click",
-            (event) => {
-                event.preventDefault();
-                history.push({
-                  pathname: (event.currentTarget as HTMLAnchorElement).pathname,
-                  search: (event.currentTarget as HTMLAnchorElement).search,
-                });
-              }));
-    return new BaseElement("a", attributes) as any;
+export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: Renderable[]) => {
+  const attributes = React.getAttributes(props as any);
+  attributes.push(
+    new OnHandlerA("click",
+      (event) => {
+        event.preventDefault();
+        history.push({
+          pathname: (event.currentTarget as HTMLAnchorElement).pathname,
+          search: (event.currentTarget as HTMLAnchorElement).search,
+        });
+      }));
+  return new BaseElement("a", attributes, children) as any;
 };
 
 function matchURI(path: string, uri: string) {
@@ -40,15 +40,15 @@ export interface Route<T> {
   action: F1<Map<string | number, string>, T>;
 }
 
-export async function resolve<T>(routes: Array<Route<T>>, noMatch: F0<T>) {
-const uri = history.location.pathname;
-for (const route of routes) {
-  const params = matchURI(route.path, uri);
-  if (!params) {
-       continue;
+export function resolve<T>(routes: Array<Route<T>>, noMatch: F0<T>) {
+  const uri = history.location.pathname;
+  for (const route of routes) {
+    const params = matchURI(route.path, uri);
+    if (!params) {
+      continue;
+    }
+    const result = route.action(params);
+    return result;
   }
-  const result = await route.action(params);
-  return result;
-}
-return noMatch();
+  return noMatch();
 }
