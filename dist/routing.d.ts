@@ -1,6 +1,6 @@
-import { R, Renderable } from "rahisi";
+import { R } from "rahisi";
 import { F0, F1 } from "rahisi-type-utils";
-export declare const Link: (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: Renderable[]) => any;
+export declare const Link: (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: any) => any;
 export interface Route<T> {
     path: string;
     action: F1<Map<string | number, string>, T>;

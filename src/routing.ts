@@ -5,8 +5,9 @@ import { F0, F1 } from "rahisi-type-utils";
 
 const history = createBrowserHistory();
 
-export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: Renderable[]) => {
+export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: any) => {
   const attributes = React.getAttributes(props as any);
+  const kids = React.getChildren(children);
   attributes.push(
     new OnHandlerA("click",
       (event) => {
@@ -16,7 +17,7 @@ export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children:
           search: (event.currentTarget as HTMLAnchorElement).search,
         });
       }));
-  return new BaseElement("a", attributes, children) as any;
+  return new BaseElement("a", attributes, kids) as any;
 };
 
 function matchURI(path: string, uri: string) {

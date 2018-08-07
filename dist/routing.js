@@ -6,6 +6,7 @@ const rahisi_1 = require("rahisi");
 const history = history_1.createBrowserHistory();
 exports.Link = (props, children) => {
     const attributes = rahisi_1.React.getAttributes(props);
+    const kids = rahisi_1.React.getChildren(children);
     attributes.push(new rahisi_1.OnHandlerA("click", (event) => {
         event.preventDefault();
         history.push({
@@ -13,7 +14,7 @@ exports.Link = (props, children) => {
             search: event.currentTarget.search,
         });
     }));
-    return new rahisi_1.BaseElement("a", attributes, children);
+    return new rahisi_1.BaseElement("a", attributes, kids);
 };
 function matchURI(path, uri) {
     const keys = [];
