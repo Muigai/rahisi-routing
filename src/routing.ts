@@ -1,9 +1,9 @@
-import { createBrowserHistory } from "history";
+import { createBrowserHistory, createHashHistory } from "history";
 import pathToRegexp = require("path-to-regexp");
 import { BaseElement, OnHandlerA, R, React, Renderable } from "rahisi";
 import { F0, F1 } from "rahisi-type-utils";
 
-const history = createBrowserHistory();
+const history = createHashHistory();
 
 export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: any) => {
   const attributes = React.getAttributes(props as any);
