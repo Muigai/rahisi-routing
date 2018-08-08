@@ -3,7 +3,7 @@ import pathToRegexp = require("path-to-regexp");
 import { BaseElement, OnHandlerA, R, React, Renderable } from "rahisi";
 import { F0, F1 } from "rahisi-type-utils";
 
-const history = createHashHistory();
+const history = createBrowserHistory();
 
 export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: any) => {
   const attributes = React.getAttributes(props as any);

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const history_1 = require("history");
 const pathToRegexp = require("path-to-regexp");
 const rahisi_1 = require("rahisi");
-const history = history_1.createHashHistory();
+const history = history_1.createBrowserHistory();
 exports.Link = (props, children) => {
     const attributes = rahisi_1.React.getAttributes(props);
     const kids = rahisi_1.React.getChildren(children);
