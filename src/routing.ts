@@ -1,7 +1,7 @@
 import { createBrowserHistory, createHashHistory } from "history";
 import pathToRegexp = require("path-to-regexp");
-import { BaseElement, OnHandlerA, R, React, Renderable } from "rahisi";
-import { F0, F1 } from "rahisi-type-utils";
+import { BaseElement, ConditionalRenderElement, OnHandlerA, R, React, Renderable } from "rahisi";
+import { F1 } from "rahisi-type-utils";
 
 const history = createBrowserHistory();
 
@@ -36,20 +36,28 @@ function matchURI(path: string, uri: string) {
   return params;
 }
 
-export interface Route<T> {
+export interface Route {
   path: string;
-  action: F1<Map<string | number, string>, T>;
+  action: F1<Map<string | number, string>, Renderable>;
 }
 
-export function resolve<T>(routes: Array<Route<T>>, noMatch: F0<T>) {
+export function resolve(route: Route) {
   const uri = history.location.pathname;
-  for (const route of routes) {
-    const params = matchURI(route.path, uri);
-    if (!params) {
-      continue;
-    }
-    const result = route.action(params);
-    return result;
-  }
-  return noMatch();
+  const params = matchURI(route.path, uri);
+  return params;
 }
+
+export const Switch = (routes: Route[], noMatch: Renderable) => {
+
+  const test =
+    routes.map(
+      (a) => {
+        return {
+          test: () => resolve(a) != null,
+          renderable: () => resolve(a) ? a.action(resolve(a)!) : noMatch,
+        };
+      },
+    );
+
+  return new ConditionalRenderElement(test, noMatch);
+};

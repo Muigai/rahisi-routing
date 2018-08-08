@@ -31,17 +31,19 @@ function matchURI(path, uri) {
     }
     return params;
 }
-function resolve(routes, noMatch) {
+function resolve(route) {
     const uri = history.location.pathname;
-    for (const route of routes) {
-        const params = matchURI(route.path, uri);
-        if (!params) {
-            continue;
-        }
-        const result = route.action(params);
-        return result;
-    }
-    return noMatch();
+    const params = matchURI(route.path, uri);
+    return params;
 }
 exports.resolve = resolve;
+exports.Switch = (routes, noMatch) => {
+    const test = routes.map((a) => {
+        return {
+            test: () => resolve(a) != null,
+            renderable: () => resolve(a) ? a.action(resolve(a)) : noMatch,
+        };
+    });
+    return new rahisi_1.ConditionalRenderElement(test, noMatch);
+};
 //# sourceMappingURL=routing.js.map

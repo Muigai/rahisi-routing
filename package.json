@@ -22,7 +22,7 @@
   "dependencies": {
     "history": "^4.7.2",
     "path-to-regexp": "^2.2.1",
-    "rahisi": "^1.1.18"
+    "rahisi": "^1.1.20"
   },
   "repository": {
     "type": "git",

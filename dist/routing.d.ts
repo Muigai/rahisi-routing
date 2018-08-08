@@ -1,8 +1,9 @@
-import { R } from "rahisi";
-import { F0, F1 } from "rahisi-type-utils";
+import { ConditionalRenderElement, R, Renderable } from "rahisi";
+import { F1 } from "rahisi-type-utils";
 export declare const Link: (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: any) => any;
-export interface Route<T> {
+export interface Route {
     path: string;
-    action: F1<Map<string | number, string>, T>;
+    action: F1<Map<string | number, string>, Renderable>;
 }
-export declare function resolve<T>(routes: Array<Route<T>>, noMatch: F0<T>): T;
+export declare function resolve(route: Route): Map<string | number, string> | null;
+export declare const Switch: (routes: Route[], noMatch: Renderable) => ConditionalRenderElement;
