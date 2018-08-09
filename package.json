@@ -1,6 +1,6 @@
 {
   "name": "rahisi-routing",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Routing library for rahisi.",
   "main": "dist/routing.js",
   "typings": "dist/routing.d.ts",
