@@ -1,24 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const history_1 = require("history");
 const pathToRegexp = require("path-to-regexp");
 const rahisi_1 = require("rahisi");
-const history = history_1.createBrowserHistory();
+const history = window.history;
 exports.Link = (props, children) => {
     const attributes = rahisi_1.React.getAttributes(props);
     const kids = rahisi_1.React.getChildren(children);
     attributes.push(new rahisi_1.OnHandlerA("click", (event) => {
         event.preventDefault();
-        history.push({
-            pathname: event.currentTarget.pathname,
-            search: event.currentTarget.search,
-        });
+        const target = event.currentTarget;
+        const url = `${target.pathname}${target.search}`;
+        history.pushState({}, "", url);
     }));
     return new rahisi_1.BaseElement("a", attributes, kids);
 };
 function matchURI(path, uri) {
     const keys = [];
-    const pattern = pathToRegexp(path, keys);
+    const pattern = pathToRegexp(path, keys); // cache?
     const match = pattern.exec(uri);
     if (!match) {
         return null;
@@ -32,7 +30,7 @@ function matchURI(path, uri) {
     return params;
 }
 function resolve(route) {
-    const uri = history.location.pathname;
+    const uri = window.location.pathname;
     const params = matchURI(route.path, uri);
     return params;
 }
@@ -41,7 +39,7 @@ exports.Switch = (routes, noMatch) => {
     const test = routes.map((a) => {
         return {
             test: () => resolve(a) != null,
-            renderable: () => resolve(a) ? a.action(resolve(a)) : noMatch,
+            renderable: resolve(a) ? () => a.action(resolve(a)) : noMatch,
         };
     });
     return new rahisi_1.ConditionalRenderElement(test, noMatch);

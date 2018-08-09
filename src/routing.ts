@@ -1,9 +1,8 @@
-import { createBrowserHistory, createHashHistory } from "history";
 import pathToRegexp = require("path-to-regexp");
 import { BaseElement, ConditionalRenderElement, OnHandlerA, R, React, Renderable } from "rahisi";
-import { F1 } from "rahisi-type-utils";
+import { F0, F1 } from "rahisi-type-utils";
 
-const history = createBrowserHistory();
+const history = window.history;
 
 export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: any) => {
   const attributes = React.getAttributes(props as any);
@@ -12,17 +11,16 @@ export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children:
     new OnHandlerA("click",
       (event) => {
         event.preventDefault();
-        history.push({
-          pathname: (event.currentTarget as HTMLAnchorElement).pathname,
-          search: (event.currentTarget as HTMLAnchorElement).search,
-        });
+        const target = event.currentTarget as HTMLAnchorElement;
+        const url = `${target.pathname}${target.search}`;
+        history.pushState({}, "", url);
       }));
   return new BaseElement("a", attributes, kids) as any;
 };
 
 function matchURI(path: string, uri: string) {
   const keys: pathToRegexp.Key[] = [];
-  const pattern = pathToRegexp(path, keys);
+  const pattern = pathToRegexp(path, keys); // cache?
   const match = pattern.exec(uri);
   if (!match) {
     return null;
@@ -42,19 +40,19 @@ export interface Route {
 }
 
 export function resolve(route: Route) {
-  const uri = history.location.pathname;
+  const uri = window.location.pathname;
   const params = matchURI(route.path, uri);
   return params;
 }
 
-export const Switch = (routes: Route[], noMatch: Renderable) => {
+export const Switch = (routes: Route[], noMatch: F0<Renderable>) => {
 
   const test =
     routes.map(
       (a) => {
         return {
           test: () => resolve(a) != null,
-          renderable: () => resolve(a) ? a.action(resolve(a)!) : noMatch,
+          renderable: resolve(a) ? () => a.action(resolve(a)!) : noMatch,
         };
       },
     );
