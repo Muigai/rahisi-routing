@@ -52,7 +52,7 @@ export const Switch = (routes: Route[], noMatch: F0<Renderable>) => {
       (a) => {
         return {
           test: () => resolve(a) != null,
-          renderable: resolve(a) ? () => a.action(resolve(a)!) : noMatch,
+          renderable: () => resolve(a) ? a.action(resolve(a)!) : noMatch(),
         };
       },
     );

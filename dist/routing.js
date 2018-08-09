@@ -39,7 +39,7 @@ exports.Switch = (routes, noMatch) => {
     const test = routes.map((a) => {
         return {
             test: () => resolve(a) != null,
-            renderable: resolve(a) ? () => a.action(resolve(a)) : noMatch,
+            renderable: () => resolve(a) ? a.action(resolve(a)) : noMatch(),
         };
     });
     return new rahisi_1.ConditionalRenderElement(test, noMatch);
