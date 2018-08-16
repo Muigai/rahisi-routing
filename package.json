@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "path-to-regexp": "^2.2.1",
-    "rahisi": "^1.1.21"
+    "rahisi": "^1.1.31"
   },
   "repository": {
     "type": "git",
