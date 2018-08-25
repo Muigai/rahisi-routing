@@ -5,17 +5,17 @@ import { F0, F1 } from "rahisi-type-utils";
 const history = window.history;
 
 export const Link = (props: R.AnchorHTMLAttributes<HTMLAnchorElement>, children: any) => {
-  const attributes = React.getAttributes(props as any);
+  const attributes = React.getAttributes(props);
   const kids = React.getChildren(children);
   attributes.push(
-    new OnHandlerA("click",
+    OnHandlerA.make<HTMLAnchorElement>("click",
       (event) => {
         event.preventDefault();
-        const target = event.currentTarget as HTMLAnchorElement;
+        const target = event.currentTarget;
         const url = `${target.pathname}${target.search}`;
         history.pushState({}, "", url);
       }));
-  return new BaseElement("a", attributes, kids) as any;
+  return new BaseElement("a", attributes, kids);
 };
 
 function matchURI(path: string, uri: string) {
